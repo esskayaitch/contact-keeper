@@ -1,8 +1,15 @@
 const express = require('express'); // common js format
+const connectDB = require('./config/db');
+
+const connctDB = require('./config/db');
+
 const app = express();
 const PORT = process.env.PORT || 5555;
 
-// app.get('/', (req, res) => res.json({ msg: 'JJJJJJJJJust browsin - ahhhhhhhhhhhhhh' }));
+// connect to mongoDB
+connectDB();
+
+app.get('/', (req, res) => res.json({ msg: 'Welcome to the Contact Keeper' }));
 
 /**
  * Define routes
