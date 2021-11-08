@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const { body, validationResult } = require('express-validator');
-const User = require('../models/User');
+const jwt = require('jsonwebtoken'); // json web tokens
+const config = require('config'); // get.config etc.
+const { body, validationResult } = require('express-validator'); // express validation functions
+const User = require('../models/User'); // database schema model
 
 // @route     POST api/users
 // @desc      Register a user
@@ -36,6 +36,7 @@ router.post('/', [body('name', 'The name field is required.').notEmpty(), body('
 
     const salt = await bcrypt.genSalt(9);
     user.password = await bcrypt.hash(password, salt);
+
     await user.save();
 
     const payload = {
@@ -43,13 +44,12 @@ router.post('/', [body('name', 'The name field is required.').notEmpty(), body('
         id: user.id
       }
     };
-    //
-
+    // generate and return a token
     jwt.sign(
       payload,
       config.get('jwtSecret'),
       {
-        expiresIn: 36000
+        expiresIn: 360000
       },
       (err, token) => {
         if (err) throw err;
