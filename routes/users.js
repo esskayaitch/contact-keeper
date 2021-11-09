@@ -58,7 +58,6 @@ router.post('/', [body('name', 'The name field is required.').notEmpty(), body('
     );
     //
   } catch (error) {
-    //
     console.error(error.message);
     res.status(500).send('>>>>> Server Error. <<<<<');
   }

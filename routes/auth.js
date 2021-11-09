@@ -66,8 +66,8 @@ router.post('/', [body('email', 'Please include a valid email address.').isEmail
         res.json({ token });
       }
     );
-  } catch (err) {
-    console.error(err.message);
+  } catch (error) {
+    console.error(error.message);
     return res.status(500).send('Server Error 2.');
   }
 });
