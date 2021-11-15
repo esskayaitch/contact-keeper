@@ -8,16 +8,16 @@ const ContactReducer = (state, action) => {
         contacts: [...state.contacts, action.payload]
       };
 
-    case DELETE_CONTACT:
-      return {
-        ...state,
-        contacts: state.contacts.filter(contact => contact.id !== action.payload)
-      };
-
     case UPDATE_CONTACT:
       return {
         ...state,
         contacts: state.contacts.map(contact => (contact.id === action.payload.id ? action.payload : contact)) // replace content of matching id
+      };
+
+    case DELETE_CONTACT:
+      return {
+        ...state,
+        contacts: state.contacts.filter(contact => contact.id !== action.payload)
       };
 
     case SET_CURRENT:
@@ -30,6 +30,21 @@ const ContactReducer = (state, action) => {
       return {
         ...state,
         current: null
+      };
+
+    case FILTER_CONTACTS:
+      return {
+        ...state,
+        filtered: state.contacts.filter(contact => {
+          const regex = new RegExp(`${action.payload}`, 'gi');
+          return contact.name.match(regex) || contact.email.match(regex);
+        })
+      };
+
+    case CLEAR_FILTER:
+      return {
+        ...state,
+        filtered: null
       };
 
     default:

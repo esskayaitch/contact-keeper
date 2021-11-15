@@ -17,24 +17,32 @@ const ContactForm = () => {
         type: 'personal'
       });
     }
-  }, [contactContext, current]); // if either of these change...
+  }, [contactContext, current]); // if either of these change
 
   const [contact, setContact] = useState({
     name: '',
     email: '',
     phone: '',
-    type: 'personal'
+    type: 'personal' // default type
   });
+
+  // destructure contact
   const { name, email, phone, type } = contact;
 
+  // set state of contact that fired onChange
   const onChange = e => setContact({ ...contact, [e.target.name]: e.target.value });
 
+  // When form is submitted
   const onSubmit = e => {
     e.preventDefault();
+
+    // if current not set this is a new contact, so add
     if (current === null) {
       addContact(contact);
     } else {
+      // otherwise we are editing an existing contact, so update
       updateContact(contact);
+      // and clear current
       clearCurrent();
     }
     setContact({
@@ -51,6 +59,7 @@ const ContactForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
+      {/* Heading - if current set, then edit otherwise add */}
       <h2 className="text-primary">{current ? 'Edit Contact' : 'Add Contact'}</h2>
       {/* Name */}
       <input type="text" placeholder="Name" name="name" value={name} onChange={onChange} />
@@ -63,8 +72,10 @@ const ContactForm = () => {
       <input type="radio" name="type" value="personal" checked={type === 'personal'} onChange={onChange} /> Personal
       <input type="radio" name="type" value="professional" checked={type === 'professional'} onChange={onChange} /> Professional
       <div>
+        {/* button caption - if current set, then edit otherwise add */}
         <input type="submit" value={current ? 'Update Contact' : 'Add Contact'} className="btn btn-block btn-primary" />
       </div>
+      {/* if current has content then display clear button */}
       {current && (
         <div>
           <button className="btn btn-light btn-block" onClick={clearAll}>
