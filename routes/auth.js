@@ -41,12 +41,12 @@ router.post('/', [body('email', 'Please include a valid email address.').isEmail
     // check that user exists
     let user = await User.findOne({ email: email });
     if (!user) {
-      return res.status(400).json({ msg: 'I cannot find a user by that email.' });
+      return res.status(400).json({ msg: 'Invalid credentials' });
     }
     // check that encypted pw matches
     const isMatch = await bcrypt.compare(password, user.password);
     if (!isMatch) {
-      return res.status(400).json({ msg: 'That password does not match the user given.' });
+      return res.status(400).json({ msg: 'Invalid credentials' });
     }
 
     // generate and check the token

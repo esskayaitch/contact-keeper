@@ -6,12 +6,20 @@ import Home from './components/pages/Home';
 import About from './components/pages/About';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import PrivateRoute from './components/routing/PrivateRoute';
 
 import ContactState from './context/contact/ContactState';
 import AuthState from './context/auth/AuthState';
 import AlertState from './context/alert/AlertState';
 
+import setAuthToken from './utils/setAuthToken';
+
 import './App.css';
+
+// load token into global headers
+if (localStorage.token) {
+  setAuthToken(localStorage.token);
+}
 
 const App = () => {
   return (
@@ -24,7 +32,15 @@ const App = () => {
               <div className="container">
                 <Alerts />
                 <Routes>
-                  <Route exact path="/" element={<Home />} />
+                  <Route
+                    path="/"
+                    element={
+                      <PrivateRoute>
+                        <Home />
+                      </PrivateRoute>
+                    }
+                  />
+
                   <Route exact path="/about" element={<About />} />
                   <Route exact path="/register" element={<Register />} />
                   <Route exact path="/login" element={<Login />} />

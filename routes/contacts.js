@@ -106,11 +106,11 @@ router.delete('/:id', auth, async (req, res) => {
     }
 
     await Contact.findByIdAndRemove(req.params.id);
-    res.json({ msg: 'Contact has left the collection.' });
+    res.json({ msg: 'Contact has been deleted from the collection.' });
     // error
   } catch (error) {
     console.error(error.message);
-    res.status(500).send('>>>>> Server Error, update contact. <<<<<');
+    res.status(500).send('>>>>> Server Error, delete contact. <<<<<');
   }
 });
 

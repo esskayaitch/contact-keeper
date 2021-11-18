@@ -1,11 +1,30 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import AlertContext from '../../context/alert/alertContext';
+import AuthContext from '../../context/auth/authContext';
 
 const Register = () => {
   const alertContext = useContext(AlertContext);
+  const authContext = useContext(AuthContext);
+  const navigate = useNavigate();
 
   const { setAlert } = alertContext;
+  const { register, error, clearErrors, isAuthenticated } = authContext;
+
+  // check user is authnticated
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate('/'); // re-direct to home page
+    }
+
+    // check message from auth.js
+    if (error === 'That email address is already being used.') {
+      setAlert(error, 'danger');
+      clearErrors();
+    }
+    // eslint-disable-next-line
+  }, [error, isAuthenticated]);
 
   const [user, setUser] = useState({
     name: '',
@@ -25,7 +44,11 @@ const Register = () => {
     } else if (password !== password2) {
       setAlert('Password fields did not match.', 'danger');
     } else {
-      console.log('Register Submit');
+      register({
+        name,
+        email,
+        password
+      });
     }
   };
 

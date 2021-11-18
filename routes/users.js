@@ -9,7 +9,6 @@ const User = require('../models/User'); // database schema model
 // @route     POST api/users
 // @desc      Register a user
 // @access    Public
-
 router.post('/', [body('name', 'The name field is required.').notEmpty(), body('email', 'Please include a valid email address.').isEmail(), body('password', 'The password must be at least 6 characters.').isLength({ min: 6 })], async (req, res) => {
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
