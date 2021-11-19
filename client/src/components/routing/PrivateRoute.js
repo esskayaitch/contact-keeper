@@ -6,7 +6,7 @@ function PrivateRoute({ children }) {
   const authContext = useContext(AuthContext);
   const { isAuthenticated, loading } = authContext;
 
-  return !isAuthenticated && !loading ? <Navigate end to="/login" /> : children;
+  return !isAuthenticated && !loading ? <Navigate to="/login" /> : children;
 }
 
 export default PrivateRoute;

@@ -103,6 +103,9 @@ const AuthState = props => {
    */
   const clearErrors = () => dispatch({ type: CLEAR_ERRORS });
 
+  /**
+   * return
+   */
   return (
     <AuthContext.Provider
       value={{

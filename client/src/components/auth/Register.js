@@ -12,7 +12,7 @@ const Register = () => {
   const { setAlert } = alertContext;
   const { register, error, clearErrors, isAuthenticated } = authContext;
 
-  // check user is authnticated
+  // check user is authenticated
   useEffect(() => {
     if (isAuthenticated) {
       navigate('/'); // re-direct to home page

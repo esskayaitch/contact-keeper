@@ -10,6 +10,7 @@ const Home = () => {
   const { loadUser } = authContext;
   // when component loads - check token with backend and put user in state
   useEffect(() => {
+    console.log('-----hello');
     loadUser();
     // eslint-disable-next-line
   }, []);
