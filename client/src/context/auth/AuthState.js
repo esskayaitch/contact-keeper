@@ -28,7 +28,7 @@ const AuthState = props => {
     try {
       const res = await Axios.get('/api/auth');
 
-      console.log(res);
+      // console.log(res);
 
       dispatch({
         type: USER_LOADED,
