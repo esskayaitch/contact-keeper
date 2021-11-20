@@ -39,15 +39,38 @@ const ContactState = props => {
     };
     try {
       const res = await Axios.post('/api/contacts', contact, config);
+
       dispatch({ type: ADD_CONTACT, payload: res.data });
     } catch (error) {
       dispatch({ type: CONTACT_ERROR, payload: error.response.msg });
     }
   };
 
+  // Update contact
+  const updateContact = async contact => {
+    const config = {
+      headers: {
+        'Context-Type': 'application/json'
+      }
+    };
+    try {
+      const res = await Axios.put(`/api/contacts/${contact._id}`, contact, config);
+
+      dispatch({ type: UPDATE_CONTACT, payload: res.data });
+    } catch (error) {
+      dispatch({ type: CONTACT_ERROR, payload: error.response.msg });
+    }
+  };
+
   // Delete contact
-  const deleteContact = id => {
-    dispatch({ type: DELETE_CONTACT, payload: id });
+  const deleteContact = async id => {
+    try {
+      await Axios.delete(`/api/contacts/${id}`);
+
+      dispatch({ type: DELETE_CONTACT, payload: id });
+    } catch (error) {
+      dispatch({ type: CONTACT_ERROR, payload: error.response.msg });
+    }
   };
 
   // clear contacts
@@ -63,11 +86,6 @@ const ContactState = props => {
   // Clear current contact
   const clearCurrent = () => {
     dispatch({ type: CLEAR_CURRENT });
-  };
-
-  // Update contact
-  const updateContact = contact => {
-    dispatch({ type: UPDATE_CONTACT, payload: contact });
   };
 
   // Filter contacts by search text
